@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://cugbliwei.tech/"/>
-  <updated>2019-06-27T12:50:30.000Z</updated>
+  <updated>2019-06-27T12:52:06.000Z</updated>
   <id>http://cugbliwei.tech/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="http://cugbliwei.tech/posts/38528/"/>
     <id>http://cugbliwei.tech/posts/38528/</id>
     <published>2019-06-27T12:13:29.000Z</published>
-    <updated>2019-06-27T12:50:30.000Z</updated>
+    <updated>2019-06-27T12:52:06.000Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>使用hadoop steaming 跑python脚本的来解析爬虫数据的，之前一直跑得好好的，然后突然2019-06-19的数据猛然增加，那天主要是爬的b站的视频评论太多太大，但也只是每个文件2个多G，总共20个文件罢了。</p><p>开始以为是内存不够，增加了map和reduce的内存，然后又修改别的参数，弄了好久，依然内存超出，出错都是如下图所示：</p><a id="more"></a><p><img src="/posts/38528/memory.jpg" alt="memory"></p><h3 id="debug"><a href="#debug" class="headerlink" title="debug"></a>debug</h3><p>主要是对hadoop还不是很熟悉，所以在周会上提了一下，周会结束后同事帮我debug了一下，看了MR相关log，然后把出错的源数据提取出来单独执行，然后找到了出错的记录，我又单行debug了一下，发现是在调用一个第三方包的代码出了问题，尼玛，坑死人啊。</p><p>出bug的包是：</p><p><a href="https://github.com/skydark/nstools/blob/master/zhtools/langconv.py" target="_blank" rel="noopener">langconv</a></p><p>class Converter， def convert(self, string)</p><p>这个函数是用来把繁体转为简体的，出错的记录中的字符串是: </p><p>“我才收到消息推送一打开就有大佬发了这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么长的长评了啊”</p><p>我进入到这个函数中输出了一下，发现在死循环，是在”这么”这个词出现的，本来想修改这个bug的，后来想想可能还隐藏其他bug，改了后面可能还会越来越多，算了，还是再找一个靠谱点的包吧</p><h3 id="fix"><a href="#fix" class="headerlink" title="fix"></a>fix</h3><p>使用</p>]]></content>
+    <content type="html"><![CDATA[<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>使用hadoop steaming 跑python脚本的来解析爬虫数据的，之前一直跑得好好的，然后突然2019-06-19的数据猛然增加，那天主要是爬的b站的视频评论太多太大，但也只是每个文件2个多G，总共20个文件罢了。</p><p>开始以为是内存不够，增加了map和reduce的内存，然后又修改别的参数，弄了好久，依然内存超出，出错都是如下图所示：</p><a id="more"></a><p><img src="/posts/38528/memory.png" alt="memory"></p><h3 id="debug"><a href="#debug" class="headerlink" title="debug"></a>debug</h3><p>主要是对hadoop还不是很熟悉，所以在周会上提了一下，周会结束后同事帮我debug了一下，看了MR相关log，然后把出错的源数据提取出来单独执行，然后找到了出错的记录，我又单行debug了一下，发现是在调用一个第三方包的代码出了问题，尼玛，坑死人啊。</p><p>出bug的包是：</p><p><a href="https://github.com/skydark/nstools/blob/master/zhtools/langconv.py" target="_blank" rel="noopener">langconv</a></p><p>class Converter， def convert(self, string)</p><p>这个函数是用来把繁体转为简体的，出错的记录中的字符串是: </p><p>“我才收到消息推送一打开就有大佬发了这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么长的长评了啊”</p><p>我进入到这个函数中输出了一下，发现在死循环，是在”这么”这个词出现的，本来想修改这个bug的，后来想想可能还隐藏其他bug，改了后面可能还会越来越多，算了，还是再找一个靠谱点的包吧</p><h3 id="fix"><a href="#fix" class="headerlink" title="fix"></a>fix</h3><p>使用</p>]]></content>
     
     <summary type="html">
     
