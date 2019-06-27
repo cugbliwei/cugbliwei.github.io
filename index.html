@@ -120,7 +120,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/centos/" style="font-size: 10px;">centos</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/生活/" style="font-size: 10px;">生活</a> <a href="/tags/花呗/" style="font-size: 10px;">花呗</a>
+						<a href="/tags/centos/" style="font-size: 10px;">centos</a> <a href="/tags/hadoop/" style="font-size: 10px;">hadoop</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/langconv/" style="font-size: 10px;">langconv</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/python/" style="font-size: 10px;">python</a>
 					</div>
 				</section>
 				
@@ -199,11 +199,11 @@
 </nav>
       <div class="body-wrap">
   
-    <article id="post-花呗提现" class="article article-type-post" itemscope="" itemprop="blogPost">
+    <article id="post-记一次hadoop-MR调用第三方库超内存的bug" class="article article-type-post" itemscope="" itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/posts/61151/" class="article-date">
-  	<time datetime="2019-03-18T06:15:02.000Z" itemprop="datePublished">2019-03-18</time>
+      <a href="/posts/38528/" class="article-date">
+  	<time datetime="2019-06-27T12:13:29.000Z" itemprop="datePublished">2019-06-27</time>
 </a>
     </div>
   
@@ -216,7 +216,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/posts/61151/">花呗提现</a>
+      <a class="article-title" href="/posts/38528/">记一次hadoop MR调用第三方库超内存的bug</a>
     </h1>
   
 
@@ -228,11 +228,16 @@
 	  
 		
 		
-        <h2 id="最安全的花呗套现提现流程"><a href="#最安全的花呗套现提现流程" class="headerlink" title="最安全的花呗套现提现流程"></a>最安全的花呗套现提现流程</h2><p>可先联系店主咨询，qq：1192120201，微信：liwei199264</p>
-<p>通过淘宝购买虚拟商品，使用花呗付款方式提现</p>
-<p>虚拟商品发货速度快，收货也快，5分钟就能提现成功</p>
-<p>店铺开了几年，也交了保证金，安全有保证</p>
-<p>费率4，低于同行，老客户可再低一些</p>
+        <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>使用hadoop steaming 跑python脚本的来解析爬虫数据的，之前一直跑得好好的，然后突然2019-06-19的数据猛然增加，那天主要是爬的b站的视频评论太多太大，但也只是每个文件2个多G，总共20个文件罢了。</p>
+<p>开始以为是内存不够，增加了map和reduce的内存，然后又修改别的参数，弄了好久，依然内存超出，出错都是如下图所示：</p>
+<p><img src="/images/memory.jpg" alt=""></p>
+<h3 id="debug"><a href="#debug" class="headerlink" title="debug"></a>debug</h3><p>主要是对hadoop还不是很熟悉，所以在周会上提了一下，周会结束后同事帮我debug了一下，看了MR相关log，然后把出错的源数据提取出来单独执行，然后找到了出错的记录，我又单行debug了一下，发现是在调用一个第三方包的代码出了问题，尼玛，坑死人啊。</p>
+<p>出bug的包是：</p>
+<p><a href="https://github.com/skydark/nstools/blob/master/zhtools/langconv.py，class" target="_blank" rel="noopener">https://github.com/skydark/nstools/blob/master/zhtools/langconv.py，class</a> Converter， def convert(self, string)</p>
+<p>这个函数是用来把繁体转为简体的，出错的记录中的字符串是: </p>
+<p>“我才收到消息推送一打开就有大佬发了这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么这么长的长评了啊”</p>
+<p>我进入到这个函数中输出了一下，发现在死循环，是在”这么”这个词出现的，本来想修改这个bug的，后来想想可能还隐藏其他bug，改了后面可能还会越来越多，算了，还是再找一个靠谱点的包吧</p>
+<h3 id="fix"><a href="#fix" class="headerlink" title="fix"></a>fix</h3><p>使用</p>
 
       
     </div>
@@ -240,12 +245,12 @@
     <div class="article-info article-info-index">
       
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/生活/">生活</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/花呗/">花呗</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hadoop/">hadoop</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/langconv/">langconv</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
 	</div>
 
       
 	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/生活/">生活</a><a class="article-category-link" href="/categories/生活/花呗/">花呗</a>
+	<a class="article-category-link" href="/categories/技术/">技术</a><a class="article-category-link" href="/categories/技术/hexo/">hexo</a>
 	</div>
 
 
