@@ -3,22 +3,22 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
-  <title>博客搭建与写博客要点 | cugbliwei</title>
+  <title>mysql查询中的varchar列用int查询对索引的影响 | cugbliwei</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="baidu-site-verification" content="dVgVSDoqjG">
   <meta name="google-site-verification" content="_mJ3M9fDaNcbU32JjcrSsaG4dtCpDc9a-6_jmdmkurA">
-  <meta name="description" content="Hexo 官方Hexo主页 Hexo官方文档  GitHub">
-<meta name="keywords" content="linux,hexo,centos">
+  <meta name="description" content="背景之前线上的一个服务，我来之后是由我来接手的，然后那时有人跟我反馈说有的sql查询慢，我查了之后发现是索引的建立和查询不对头，问后端想要哪些索引或者哪些比较快的查询，知道所有的需求之后，然后我就重新建了表，重建索引，当时测试都没有问题了。 然而半年之后的昨天，又有人反馈发给我sql查询慢，我还奇怪，索引挺多的，由于数据也挺大，每天增量1000多万条数据，所以也导致表数据和索引都很大，不过只保留1">
+<meta name="keywords" content="mysql,索引">
 <meta property="og:type" content="article">
-<meta property="og:title" content="博客搭建与写博客要点">
-<meta property="og:url" content="http://cugbliwei.tech/posts/54634/index.html">
+<meta property="og:title" content="mysql查询中的varchar列用int查询对索引的影响">
+<meta property="og:url" content="http://cugbliwei.tech/posts/4728/index.html">
 <meta property="og:site_name" content="cugbliwei">
-<meta property="og:description" content="Hexo 官方Hexo主页 Hexo官方文档  GitHub">
+<meta property="og:description" content="背景之前线上的一个服务，我来之后是由我来接手的，然后那时有人跟我反馈说有的sql查询慢，我查了之后发现是索引的建立和查询不对头，问后端想要哪些索引或者哪些比较快的查询，知道所有的需求之后，然后我就重新建了表，重建索引，当时测试都没有问题了。 然而半年之后的昨天，又有人反馈发给我sql查询慢，我还奇怪，索引挺多的，由于数据也挺大，每天增量1000多万条数据，所以也导致表数据和索引都很大，不过只保留1">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-06-27T12:33:32.000Z">
+<meta property="og:updated_time" content="2019-07-03T01:51:03.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="博客搭建与写博客要点">
-<meta name="twitter:description" content="Hexo 官方Hexo主页 Hexo官方文档  GitHub">
+<meta name="twitter:title" content="mysql查询中的varchar列用int查询对索引的影响">
+<meta name="twitter:description" content="背景之前线上的一个服务，我来之后是由我来接手的，然后那时有人跟我反馈说有的sql查询慢，我查了之后发现是索引的建立和查询不对头，问后端想要哪些索引或者哪些比较快的查询，知道所有的需求之后，然后我就重新建了表，重建索引，当时测试都没有问题了。 然而半年之后的昨天，又有人反馈发给我sql查询慢，我还奇怪，索引挺多的，由于数据也挺大，每天增量1000多万条数据，所以也导致表数据和索引都很大，不过只保留1">
   
     <link rel="alternative" href="/atom.xml" title="cugbliwei" type="application/atom+xml">
   
@@ -199,11 +199,11 @@
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="post-博客搭建与写博客要点" class="article article-type-post" itemscope="" itemprop="blogPost">
+      <div class="body-wrap"><article id="post-mysql查询中的varchar列用int查询对索引的影响" class="article article-type-post" itemscope="" itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/posts/54634/" class="article-date">
-  	<time datetime="2018-12-18T02:36:00.000Z" itemprop="datePublished">2018-12-18</time>
+      <a href="/posts/4728/" class="article-date">
+  	<time datetime="2019-07-03T01:27:59.000Z" itemprop="datePublished">2019-07-03</time>
 </a>
     </div>
   
@@ -216,7 +216,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      博客搭建与写博客要点
+      mysql查询中的varchar列用int查询对索引的影响
     </h1>
   
 
@@ -225,12 +225,12 @@
       <div class="article-info article-info-post">
         
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/">centos</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/索引/">索引</a></li></ul>
 	</div>
 
         
 	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/技术/">技术</a><a class="article-category-link" href="/categories/技术/hexo/">hexo</a>
+	<a class="article-category-link" href="/categories/技术/">技术</a><a class="article-category-link" href="/categories/技术/mysql/">mysql</a>
 	</div>
 
 
@@ -243,34 +243,17 @@
 	  
 		
 		
-        <h2 id="Hexo-官方"><a href="#Hexo-官方" class="headerlink" title="Hexo 官方"></a>Hexo 官方</h2><p><a href="https://hexo.io/" target="_blank" rel="noopener">Hexo主页</a></p>
-<p><a href="https://hexo.io/docs/" target="_blank" rel="noopener">Hexo官方文档</a> </p>
-<p><a href="https://github.com/hexojs/hexo" target="_blank" rel="noopener">GitHub</a></p>
-<a id="more"></a>
-<h2 id="搭建教程"><a href="#搭建教程" class="headerlink" title="搭建教程"></a>搭建教程</h2><p>用hexo搭建github.io博客，参考：<a href="https://zhuanlan.zhihu.com/p/25729240" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/25729240</a></p>
-<h2 id="博客主题"><a href="#博客主题" class="headerlink" title="博客主题"></a>博客主题</h2><p>使用主题：<a href="https://github.com/litten/hexo-theme-yilia" target="_blank" rel="noopener">https://github.com/litten/hexo-theme-yilia</a></p>
-<h2 id="Markdown编辑器"><a href="#Markdown编辑器" class="headerlink" title="Markdown编辑器"></a>Markdown编辑器</h2><p>新手可以使用Markdown编辑器：<a href="https://typora.io/" target="_blank" rel="noopener">typora</a></p>
-<p>方便的地方在于写的地方即预览的地方</p>
-<p>Markdown的一些：<a href="https://zhangslob.github.io/2017/02/26/%E5%88%A9%E7%94%A8HEXO%E6%90%AD%E5%BB%BA%E7%9A%84%E5%8D%9A%E5%AE%A2/" target="_blank" rel="noopener">常用语法</a></p>
-<p>一般敲代码用vim，所以熟悉Markdown语法之后，编辑器就不需要了</p>
-<h2 id="hexo-搭建"><a href="#hexo-搭建" class="headerlink" title="hexo 搭建"></a>hexo 搭建</h2><h3 id="node-amp-git"><a href="#node-amp-git" class="headerlink" title="node &amp; git"></a>node &amp; git</h3><p>先安装nodejs 和 git</p>
-<h3 id="安装-hexo"><a href="#安装-hexo" class="headerlink" title="安装 hexo"></a>安装 hexo</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
-<h3 id="博客目录"><a href="#博客目录" class="headerlink" title="博客目录"></a>博客目录</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo init blog</span><br></pre></td></tr></table></figure>
-<h2 id="hexo写博客步骤"><a href="#hexo写博客步骤" class="headerlink" title="hexo写博客步骤"></a>hexo写博客步骤</h2><h3 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"标题名称"</span></span><br></pre></td></tr></table></figure>
-<p>然后用 vim 或 typora 编辑器写好文章</p>
-<h3 id="本地测试"><a href="#本地测试" class="headerlink" title="本地测试"></a>本地测试</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>然后打开<a href="http://localhost:4000/" target="_blank" rel="noopener">本地地址</a> 本地服务地址查看文章</p>
-<h3 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<h3 id="发布"><a href="#发布" class="headerlink" title="发布"></a>发布</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>发布即可在<a href="https://cugbliwei.github.io" target="_blank" rel="noopener">我的博客</a>查看远程文章</p>
-<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>hexo deploy 可能会出错，提示：ERROR Deployer not found: git</p>
-<p>fix it: </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
-<h3 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-admin --save</span><br><span class="line"></span><br><span class="line">npm i hexo-generator-json-content --save</span><br><span class="line"></span><br><span class="line">npm install hexo-abbrlink --save</span><br><span class="line"></span><br><span class="line">npm install hexo-less --save</span><br><span class="line"></span><br><span class="line">npm install hexo-index-anything --save</span><br><span class="line"></span><br><span class="line">npm install hexo-related-popular-posts --save</span><br><span class="line"></span><br><span class="line">npm install hexo-generator-seo-friendly-sitemap --save</span><br><span class="line"></span><br><span class="line">npm install hexo-encrypt --save</span><br></pre></td></tr></table></figure>
-<h3 id="评论"><a href="#评论" class="headerlink" title="评论"></a>评论</h3><p><a href="https://valine.js.org/hexo.html" target="_blank" rel="noopener">valine</a></p>
-<p><a href="https://github.com/litten/hexo-theme-yilia/pull/646" target="_blank" rel="noopener">yilia支持</a></p>
-<p><a href="https://leancloud.cn/dashboard/app.html?appid=8oc8xy8juzYQgFLVSCufkx0F-gzGzoHsz#/key" target="_blank" rel="noopener">leancloud</a></p>
-<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>get it and enjoy it!</p>
+        <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>之前线上的一个服务，我来之后是由我来接手的，然后那时有人跟我反馈说有的sql查询慢，我查了之后发现是索引的建立和查询不对头，问后端想要哪些索引或者哪些比较快的查询，知道所有的需求之后，然后我就重新建了表，重建索引，当时测试都没有问题了。</p>
+<p>然而半年之后的昨天，又有人反馈发给我sql查询慢，我还奇怪，索引挺多的，由于数据也挺大，每天增量1000多万条数据，所以也导致表数据和索引都很大，不过只保留10天数据，所以有索引的情况下，查询还是很快的，在测试后端所有可能涉及的sql下，一般都是在1s以下，那为何还反馈说查询慢呢？</p>
+<h3 id="debug"><a href="#debug" class="headerlink" title="debug"></a>debug</h3><p>然后我就看了他发给我的sql，类似下面：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from src_ios_rank_hour where dateid=20190702 and game_id in (1245560420, 1257031979, 895670960);</span><br></pre></td></tr></table></figure>
+<p>然后查询了下，花了5s多，确实挺慢，有时候会更慢。</p>
+<p>然后我的第一反映是 game_id 列是varchar，这样用数字查询会不会导致查询慢，然后我就加上引号：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from src_ios_rank_hour where dateid=20190702 and game_id in (&apos;1245560420&apos;, &apos;1257031979&apos;, &apos;895670960&apos;);</span><br></pre></td></tr></table></figure>
+<p>重新查询了一下，发现非常快，只花了0.05秒</p>
+<h3 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h3><p>然后就觉得应该是这个原因引起的，google了一下原因，发现是：</p>
+<p>mysql这种情况不会触发索引，是全表查询，所以会导致索引失效，查询慢</p>
+<p>所以以后sql语句，还是按照标准来写好了</p>
 
       
     </div>
@@ -280,15 +263,11 @@
     
 <nav id="article-nav">
   
-    <a href="/posts/38528/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          记一次hadoop MR调用第三方库超内存的bug
-        
-      </div>
-    </a>
   
+    <a href="/posts/38528/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">记一次hadoop MR调用第三方库超内存的bug</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
   
 </nav>
 

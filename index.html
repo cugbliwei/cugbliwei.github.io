@@ -120,7 +120,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/centos/" style="font-size: 10px;">centos</a> <a href="/tags/hadoop/" style="font-size: 10px;">hadoop</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/langconv/" style="font-size: 10px;">langconv</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/python/" style="font-size: 10px;">python</a>
+						<a href="/tags/centos/" style="font-size: 10px;">centos</a> <a href="/tags/hadoop/" style="font-size: 10px;">hadoop</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/langconv/" style="font-size: 10px;">langconv</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/索引/" style="font-size: 10px;">索引</a>
 					</div>
 				</section>
 				
@@ -198,6 +198,82 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-mysql查询中的varchar列用int查询对索引的影响" class="article article-type-post" itemscope="" itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/posts/4728/" class="article-date">
+  	<time datetime="2019-07-03T01:27:59.000Z" itemprop="datePublished">2019-07-03</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/posts/4728/">mysql查询中的varchar列用int查询对索引的影响</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">	
+      
+	  
+		
+		
+        <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>之前线上的一个服务，我来之后是由我来接手的，然后那时有人跟我反馈说有的sql查询慢，我查了之后发现是索引的建立和查询不对头，问后端想要哪些索引或者哪些比较快的查询，知道所有的需求之后，然后我就重新建了表，重建索引，当时测试都没有问题了。</p>
+<p>然而半年之后的昨天，又有人反馈发给我sql查询慢，我还奇怪，索引挺多的，由于数据也挺大，每天增量1000多万条数据，所以也导致表数据和索引都很大，不过只保留10天数据，所以有索引的情况下，查询还是很快的，在测试后端所有可能涉及的sql下，一般都是在1s以下，那为何还反馈说查询慢呢？</p>
+<h3 id="debug"><a href="#debug" class="headerlink" title="debug"></a>debug</h3><p>然后我就看了他发给我的sql，类似下面：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from src_ios_rank_hour where dateid=20190702 and game_id in (1245560420, 1257031979, 895670960);</span><br></pre></td></tr></table></figure>
+<p>然后查询了下，花了5s多，确实挺慢，有时候会更慢。</p>
+<p>然后我的第一反映是 game_id 列是varchar，这样用数字查询会不会导致查询慢，然后我就加上引号：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from src_ios_rank_hour where dateid=20190702 and game_id in (&apos;1245560420&apos;, &apos;1257031979&apos;, &apos;895670960&apos;);</span><br></pre></td></tr></table></figure>
+<p>重新查询了一下，发现非常快，只花了0.05秒</p>
+<h3 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h3><p>然后就觉得应该是这个原因引起的，google了一下原因，发现是：</p>
+<p>mysql这种情况不会触发索引，是全表查询，所以会导致索引失效，查询慢</p>
+<p>所以以后sql语句，还是按照标准来写好了</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/索引/">索引</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/技术/">技术</a><a class="article-category-link" href="/categories/技术/mysql/">mysql</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
+
   
     <article id="post-记一次hadoop-MR调用第三方库超内存的bug" class="article article-type-post" itemscope="" itemprop="blogPost">
   
