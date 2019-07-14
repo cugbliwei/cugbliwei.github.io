@@ -3,21 +3,22 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
-  <title>关于个人 | cugbliwei</title>
+  <title>hive实现not in遇到的一个问题 | cugbliwei</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="baidu-site-verification" content="dVgVSDoqjG">
   <meta name="google-site-verification" content="_mJ3M9fDaNcbU32JjcrSsaG4dtCpDc9a-6_jmdmkurA">
-  <meta name="description" content="个人简介 姓名：liwei   家乡：广西南宁   现居住地：广州   工作经历：宜信大数据创新中心 -&amp;gt; 网易游戏   技术经验：爬虫、golang、python   爱好：电影、足球、篮球、台球   第二爱好：羽毛球、乒乓球">
-<meta property="og:type" content="website">
-<meta property="og:title" content="关于个人">
-<meta property="og:url" content="http://cugbliwei.tech/about/index.html">
+  <meta name="description" content="问题今天用left join on(…) where xx IS NULL实现not in遇到的一个问题 事情是这样的，20190707是一个all表，汇总了往日的数据，然后day表需要统计哪些在20190708新产生的，不包含在20190707里面的数据，然后用下面的hive sql：">
+<meta name="keywords" content="hive">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hive实现not in遇到的一个问题">
+<meta property="og:url" content="http://cugbliwei.tech/posts/10142/index.html">
 <meta property="og:site_name" content="cugbliwei">
-<meta property="og:description" content="个人简介 姓名：liwei   家乡：广西南宁   现居住地：广州   工作经历：宜信大数据创新中心 -&amp;gt; 网易游戏   技术经验：爬虫、golang、python   爱好：电影、足球、篮球、台球   第二爱好：羽毛球、乒乓球">
+<meta property="og:description" content="问题今天用left join on(…) where xx IS NULL实现not in遇到的一个问题 事情是这样的，20190707是一个all表，汇总了往日的数据，然后day表需要统计哪些在20190708新产生的，不包含在20190707里面的数据，然后用下面的hive sql：">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-12-18T10:05:32.000Z">
+<meta property="og:updated_time" content="2019-07-11T09:28:19.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于个人">
-<meta name="twitter:description" content="个人简介 姓名：liwei   家乡：广西南宁   现居住地：广州   工作经历：宜信大数据创新中心 -&amp;gt; 网易游戏   技术经验：爬虫、golang、python   爱好：电影、足球、篮球、台球   第二爱好：羽毛球、乒乓球">
+<meta name="twitter:title" content="hive实现not in遇到的一个问题">
+<meta name="twitter:description" content="问题今天用left join on(…) where xx IS NULL实现not in遇到的一个问题 事情是这样的，20190707是一个all表，汇总了往日的数据，然后day表需要统计哪些在20190708新产生的，不包含在20190707里面的数据，然后用下面的hive sql：">
   
     <link rel="alternative" href="/atom.xml" title="cugbliwei" type="application/atom+xml">
   
@@ -198,11 +199,11 @@
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="page-" class="article article-type-page" itemscope="" itemprop="blogPost">
+      <div class="body-wrap"><article id="post-hive实现not-in遇到的一个问题" class="article article-type-post" itemscope="" itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/about/index.html" class="article-date">
-  	<time datetime="2018-12-18T08:59:10.000Z" itemprop="datePublished">2018-12-18</time>
+      <a href="/posts/10142/" class="article-date">
+  	<time datetime="2019-07-11T09:10:13.000Z" itemprop="datePublished">2019-07-11</time>
 </a>
     </div>
   
@@ -215,7 +216,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      关于个人
+      hive实现not in遇到的一个问题
     </h1>
   
 
@@ -223,7 +224,15 @@
       
       <div class="article-info article-info-post">
         
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hive/">hive</a></li></ul>
+	</div>
+
         
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/技术/">技术</a><a class="article-category-link" href="/categories/技术/hive/">hive</a>
+	</div>
+
 
         <div class="clearfix"></div>
       </div>
@@ -234,27 +243,16 @@
 	  
 		
 		
-        <h2 id="个人简介"><a href="#个人简介" class="headerlink" title="个人简介"></a>个人简介</h2><blockquote>
-<p>姓名：liwei</p>
-</blockquote>
-<blockquote>
-<p>家乡：广西南宁</p>
-</blockquote>
-<blockquote>
-<p>现居住地：广州</p>
-</blockquote>
-<blockquote>
-<p>工作经历：宜信大数据创新中心 -&gt; 网易游戏</p>
-</blockquote>
-<blockquote>
-<p>技术经验：爬虫、golang、python</p>
-</blockquote>
-<blockquote>
-<p>爱好：电影、足球、篮球、台球</p>
-</blockquote>
-<blockquote>
-<p>第二爱好：羽毛球、乒乓球</p>
-</blockquote>
+        <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>今天用left join on(…) where xx IS NULL实现not in遇到的一个问题</p>
+<p>事情是这样的，20190707是一个all表，汇总了往日的数据，然后day表需要统计哪些在20190708新产生的，不包含在20190707里面的数据，然后用下面的hive sql：</p>
+<a id="more"></a>
+<p>Today=”20170707”<br>Today=”20170708”</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert</span> overwrite <span class="keyword">table</span> ods_xxx_review_detail_day <span class="keyword">partition</span>(dt=<span class="string">'$&#123;Today&#125;'</span>)</span><br><span class="line"><span class="keyword">SELECT</span> a.unique_md5,</span><br><span class="line">       a.review_time</span><br><span class="line"><span class="keyword">FROM</span> src_xxx_review_detail_day a</span><br><span class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> ods_xxx_review_detail_all b </span><br><span class="line"><span class="keyword">ON</span> (a.unique_md5=b.unique_md5)</span><br><span class="line"><span class="keyword">WHERE</span> a.dt=<span class="string">'$&#123;Today&#125;'</span></span><br><span class="line">  <span class="keyword">AND</span> b.dt=<span class="string">'$&#123;Yestoday&#125;'</span></span><br><span class="line">  <span class="keyword">AND</span> b.unique_md5 <span class="keyword">IS</span> <span class="literal">NULL</span>;</span><br></pre></td></tr></table></figure>
+<p>然后发现ods_xxx_review_detail_day没有新增数据，然后去src_xxx_review_detail_day查了一条8号产生的数据，然后去ods_xxx_review_detail_all找没有找到数据，那这么说上面的select应该是对的，为什么没查到数据呢？</p>
+<h2 id="debug"><a href="#debug" class="headerlink" title="debug"></a>debug</h2><p>然后就查了各种原因，google了别人实现的not in，有个人是在LEFT JOIN之后select出的20190707，然后再LEFT JOIN，所以我就按他的方式重改为如下：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> a.unique_md5,</span><br><span class="line">       a.review_time</span><br><span class="line"><span class="keyword">FROM</span> src_xxx_review_detail_day a</span><br><span class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span></span><br><span class="line">  (<span class="keyword">SELECT</span> unique_md5,</span><br><span class="line">          review_time</span><br><span class="line">   <span class="keyword">FROM</span> ods_xxx_review_detail_all</span><br><span class="line">   <span class="keyword">WHERE</span> dt=<span class="string">'$&#123;Yestoday&#125;'</span>) b </span><br><span class="line"><span class="keyword">ON</span> (a.unique_md5=b.unique_md5)</span><br><span class="line"><span class="keyword">WHERE</span> a.dt=<span class="string">'$&#123;Today&#125;'</span></span><br><span class="line">  <span class="keyword">AND</span> b.unique_md5 <span class="keyword">IS</span> <span class="literal">NULL</span>;</span><br></pre></td></tr></table></figure>
+<p>然后还真查询到新增的数据了。。。</p>
+<p>可为何上面那个就查询不到呢？今天比较忙，就暂时放下，忙完这几天我再查具体原因吧，反正现在解决了问题</p>
 
       
     </div>
@@ -262,6 +260,16 @@
   </div>
   
     
+<nav id="article-nav">
+  
+  
+    <a href="/posts/4887/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">vim本人配置及实用命令</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
   
 </article>
 
@@ -279,6 +287,27 @@
 
 
 
+
+<div class="livere">
+    <!-- 来必力City版安装代码 -->
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8zODU3Mi8xNTEwMA==">
+        <script type="text/javascript">
+       (function(d, s) {
+           var j, e = d.getElementsByTagName(s)[0];
+
+           if (typeof LivereTower === 'function') { return; }
+
+           j = d.createElement(s);
+           j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+           j.async = true;
+
+           e.parentNode.insertBefore(j, e);
+       })(document, 'script');
+        </script>
+    <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+    </div>
+    <!-- City版安装代码已完成 -->
+</div>
 
 
 
